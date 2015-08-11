@@ -1,0 +1,20 @@
+{% load staticfiles %}
+<!DOCTYPE <html>
+<head lang="en">
+	<title>Crazy Numbers</title>
+	<meta charset="UTF-8">
+	<!-- JQuery -->
+	<script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>	<!-- Bootstrap -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+	<!-- custom -->
+    <script src="{% static 'CrazyNumbersApp/js/main.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'CrazyNumbersApp/css/main.css' %}">
+</head>
+<body>
+	{% block content %}
+	<h1> hello </h1>
+	{% endblock %}
+</body>
+</html>
