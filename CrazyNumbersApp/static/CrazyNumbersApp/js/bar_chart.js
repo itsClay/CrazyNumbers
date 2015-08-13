@@ -1,85 +1,68 @@
 $(document).ready(function(){
-	InitChart2();
 
-function InitChart2() {
+var data = [4, 8, 15, 16, 23, 42];
 
-  var barData = [{
-    'x': 1,
-    'y': 5
-  }, {
-    'x': 20,
-    'y': 20
-  }, {
-    'x': 40,
-    'y': 10
-  }, {
-    'x': 60,
-    'y': 40
-  }, {
-    'x': 80,
-    'y': 5
-  }, {
-    'x': 100,
-    'y': 60
-  }];
-
-  var vis = d3.select('#visualisation'),
-    WIDTH = 500,
-    HEIGHT = 500,
-    MARGINS = {
-      top: 20,
-      right: 20,
-      bottom: 20,
-      left: 50
+var userData2 = [
+    {
+        "User_id": 2,
+        "Number": "415-279-5665",
+        "DateTime_created": "2015-08-11T22:36:05Z"
     },
-    xRange = d3.scale.ordinal().rangeRoundBands([MARGINS.left, WIDTH - MARGINS.right], 0.1).domain(barData.map(function (d) {
-      return d.x;
-    })),
+    {
+        "User_id": 3,
+        "Number": "555-555-5555",
+        "DateTime_created": "2015-08-11T22:39:07Z"
+    }
+];
+
+console.log(userData2.length)
+
+// json call to our api in d3
+var userData = d3.json('http://localhost:8000/api/users/')
 
 
-    yRange = d3.scale.linear().range([HEIGHT - MARGINS.top, MARGINS.bottom]).domain([0,
-      d3.max(barData, function (d) {
-        return d.y;
-      })
-    ]),
+// bar dimensions
+var width = 500,
+	barHeight = 20,
+	barPadding = 1;
 
-    xAxis = d3.svg.axis()
-      .scale(xRange)
-      .tickSize(5)
-      .tickSubdivide(true),
+// set scalable data numbers to fit
+var xRange = d3.scale.linear()
+	.domain([0, d3.max(userData2)])
+	.range([0, width]);
 
-    yAxis = d3.svg.axis()
-      .scale(yRange)
-      .tickSize(5)
-      .orient("left")
-      .tickSubdivide(true);
+// dynamic chart size
+var chart = d3.select('#barSVG')
+	.attr('width', width)
+	.attr('height', barHeight * userData2.length);
+
+// create bars
+var bar = chart.selectAll('g')
+	.data(userData2.User_id)
+	.enter().append('g')
+	.attr('transform', function(d, i){
+		return "translate(0," + i * barHeight + ")"
+	});
+
+bar.append('rect')
+	.attr('width', xRange)
+	.attr('height', barHeight - 1);
 
 
-  vis.append('svg:g')
-    .attr('class', 'x axis')
-    .attr('transform', 'translate(0,' + (HEIGHT - MARGINS.bottom) + ')')
-    .call(xAxis);
+bar.append('text')
+	.attr('x', function(d){
+		return xRange(d) - 3;
+	})
+	.attr('y', barHeight / 2)
+	.attr('dy', '.35em')
+	.text(function(d){
+		return d;
+	});
 
-  vis.append('svg:g')
-    .attr('class', 'y axis')
-    .attr('transform', 'translate(' + (MARGINS.left) + ',0)')
-    .call(yAxis);
-
-  vis.selectAll('rect')
-    .data(barData)
-    .enter()
-    .append('rect')
-    .attr('x', function (d) {
-      return xRange(d.x);
-    })
-    .attr('y', function (d) {
-      return yRange(d.y);
-    })
-    .attr('width', xRange.rangeBand())
-    .attr('height', function (d) {
-      return ((HEIGHT - MARGINS.bottom) - yRange(d.y));
-    })
-    .attr('fill', 'grey');
-
+// ensure d is a number
+function type(d) {
+	d.value = +d.value;
+	return d;
 }
+
 })

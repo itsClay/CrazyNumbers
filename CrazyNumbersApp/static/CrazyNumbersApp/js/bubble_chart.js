@@ -8,15 +8,22 @@ var userGet = $.ajax({
 	dataType: 'json',
 	success: function(data){
 		userData = data
-		console.log(userData)
 	}
 })
 
 // need to create an x and y object for d3 to consume
 var sampleData = [{
-	for(i=0; i<userData.length; i++) {
-		sampleData.append(userData)
-	}
+	'x':1,
+	'y':2
+},{	
+	'x':4,
+	'y':5
+},{	
+	'x':6,
+	'y':9
+},{
+	'x':12,
+	'y':14
 }];
 
 // Chart creation for Bubble Chart
