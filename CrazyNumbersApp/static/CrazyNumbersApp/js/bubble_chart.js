@@ -8,6 +8,7 @@ var userGet = $.ajax({
 	dataType: 'json',
 	success: function(data){
 		userData = data
+
 	}
 })
 
