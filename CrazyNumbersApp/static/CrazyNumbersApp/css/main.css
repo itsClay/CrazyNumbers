@@ -1,7 +1,8 @@
-.axis path, .axis line
+.axis path, 
+.axis line
 {
     fill: none;
-    stroke: #777;
+    stroke: #000;
     shape-rendering: crispEdges;
 }
 
@@ -14,18 +15,33 @@
 {
     stroke-dasharray: 1, 2;
 }
+.x.axis path{
+    display: none;
+}
+
 .bar
 {
     fill: FireBrick;
 }
 
 /* Bar SVG */
-rect {
+#barSVG, #bar2SVG, rect{
     fill: steelblue;
 }
 
-text {
+.bar {
+    fill: steelblue;
+}
+
+#barSVG text {
     fill: white;
     font: 10px sans-serif;
     text-anchor: end;
+}
+
+.bar:hover {
+    fill: brown;
+}
+rect:hover{
+    fill: green;
 }

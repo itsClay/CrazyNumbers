@@ -23,25 +23,20 @@ var getUserdata = function(){
 // callback to handle our result
 var assignUserdata = function(data){
 	userData = data
-	console.log(data)
+	userIDs = data.map(function(d) {return d['User_id']});
+	userPhoneNumbers = data.map(function(d) {return d['Number']});
 
-	var userNumbers = function(data){
-		for(var key in data){
-			userIDs.push(data[parseInt(key)]['User_id']);
-			userPhoneNumbers.push(data[parseInt(key)]['Number']);
-		};
-	};
-
+	console.log(userData);
 	console.log(userIDs);
 	console.log(userPhoneNumbers);
 
-	barChartInit();
-	barChart2Init();
+	barChartInit(userIDs);
+	barChart2Init(userIDs);
 	// bubbleChartInit();
 };
 // execute
 getUserdata()
 // SET OUR DATA VARIABLE TO THE USER IDS
 data = userIDs
-
+data2 = userPhoneNumbers
 });

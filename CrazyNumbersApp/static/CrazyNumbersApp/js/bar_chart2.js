@@ -1,8 +1,8 @@
 // BAR CHART 2 CREATION
-var barChart2Init = function(){
+var barChart2Init = function(userdata){
 	// BAR DIMENSIONS
 	var margin = {top: 20, right: 30, bottom: 30, left: 40},
-		width = 500 - margin.left - margin.right,
+		width = 960 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
 	// setting an ordinal x scale since it will not be a number value but a string
@@ -15,50 +15,40 @@ var barChart2Init = function(){
 	// AXIS 
 	var xAxis = d3.svg.axis()
 		.scale(x)
-		.orient('bottom');
+		.orient('bottom')
 
 	var yAxis = d3.svg.axis()
 		.scale(x)
-		.orient('left');
+		.orient('left')
+		.ticks(10, '%');
 
 	// CHART
-	var chart = d3.select('#bar2SVG')
-				.attr('width', width + margin.left + margin.right)
-				.attr('height', height + margin.top + margin.bottom)
-				.append('g')
-				.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+	var svg = d3.select('#bar_chart2').append('svg')
+		.attr('width', width + margin.left + margin.right)
+		.attr('height', height + margin.top + margin.bottom)
+		.append('g')
+		.attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
 	// need to re-work the domain
-	// x.domain(data.map(function(d) {return d.name; }));
-	// y.domain([0, d3.max(userIDs)]); // check back - think this needs to be phone number frequency
+	x.domain(userdata);
+	y.domain([0, d3.max(userdata, function(d){return d})]); // check back - think this needs to be phone number frequency
 
-	chart.append('g')
+	svg.append('g')
 		.attr('class', 'x axis')
 		.attr('transform', 'translate(0, ' + height + ')')
 		.call(xAxis);
 
-	chart.append('g')
+	svg.append('g')
 		.attr('class', 'y axis')
-		.call(yAxis);
+		.call(yAxis)
+	  .append('text')
+	  	.attr('transform', 'rotate(-90)')
+	  	.attr('y', 6)
+	  	.attr('dy', '.71em')
+	  	.style('text-anchor', 'end')
+	  	.text('yAxis')
 
-	var barWidth = width / userPhoneNumbers.length;
 
-	// re-useable bar creation
-	var bar = chart.selectAll('g')
-		.data(data)
-		.enter().append('g')
-		.attr('transform', function(d, i){ return 'translate(' + i * barWidth + ', 0'; });
-	// setting each bar size
-	bar.append('rect')
-		.attr('y', function(d){ return y(d.value); })
-		.attr('height', function(d){ return height - y(d.value); })
-		.attr('width', barWidth - 1);
-	// set the bar text
-	bar.append('text')
-		.attr('x', barWidth / 2)
-		.attr('y', function(d) { return y(d.value) + 3; })
-		.attr('dy', '.75em')
-		.text(function(d) { return d.value; });
 
 	function type(d) {
 		d.frequency = +d.frequency; //coerce to number
