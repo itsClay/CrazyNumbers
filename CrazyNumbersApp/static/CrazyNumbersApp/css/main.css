@@ -20,11 +20,11 @@
 }
 
 /* Bar SVG */
-#barSVG rect {
+rect {
     fill: steelblue;
 }
 
-#barSVG text {
+text {
     fill: white;
     font: 10px sans-serif;
     text-anchor: end;
