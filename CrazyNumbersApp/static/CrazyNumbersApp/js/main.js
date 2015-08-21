@@ -32,6 +32,7 @@ var assignUserdata = function(data){
 
 	barChartInit(userIDs);
 	barChart2Init(userIDs);
+	// radialProgressInit();
 	// bubbleChartInit();
 };
 // execute

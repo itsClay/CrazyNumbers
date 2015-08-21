@@ -5,9 +5,9 @@ var barChart2Init = function(userdata){
 		width = 960 - margin.left - margin.right,
 		height = 500 - margin.top - margin.bottom;
 
-	// setting an ordinal x scale since it will not be a number value but a string
-	var x = d3.scale.ordinal()
-			.rangeRoundBands([0, width], .1);
+	// setting an ordinal x scale since it will not be a number but a string
+	var x = d3.scale.linear()
+			.range([0, width]);
 
 	var y = d3.scale.linear()
 			.range([height, 0]);
@@ -18,7 +18,7 @@ var barChart2Init = function(userdata){
 		.orient('bottom')
 
 	var yAxis = d3.svg.axis()
-		.scale(x)
+		.scale(y)
 		.orient('left')
 		.ticks(10, '%');
 
@@ -48,10 +48,24 @@ var barChart2Init = function(userdata){
 	  	.style('text-anchor', 'end')
 	  	.text('yAxis')
 
+  	var bar = svg.selectAll("g")
+  	    .data(userdata)
+  	  .enter().append("g")
+  	    .attr("transform", function(d) { return "translate(" + x(d) + ",0)"; });
 
+  	bar.append("rect")
+  	    .attr("y", function(d) { return y(d); })
+  	    .attr("height", function(d) { return height - y(d); })
+  	    .attr("width", x);
+
+  	bar.append("text")
+  	    .attr("x", x / 2)
+  	    .attr("y", function(d) { return y(d) + 3; })
+  	    .attr("dy", ".75em")
+  	    .text(function(d) { return d; });
 
 	function type(d) {
-		d.frequency = +d.frequency; //coerce to number
+		d = +d; //coerce to number
 		return d;
 	};
 
