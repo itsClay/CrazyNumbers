@@ -1,36 +1,14 @@
-var sampleData = [{
-  "x": 1,
-  "y": 5
-}, {
-  "x": 20,
-  "y": 20
-}, {
-  "x": 40,
-  "y": 10
-}, {
-  "x": 60,
-  "y": 40
-}, {
-  "x": 80,
-  "y": 5
-}, {
-  "x": 100,
-  "y": 60
-}];
+// Chart creation for Bubble Chart
 
-InitChart();
-function InitChart(){
+function bubbleChartInit(){
         var vis = d3.select("#svgVisualize");
-        var xRange = d3.scale.linear().range([40, 400]).domain([d3.min(sampleData, function (d) {
-                            return (d.x);
-                        }),
-                        d3.max(sampleData, function (d) {
-                            return d.x;
-                        })]);
-        var yRange = d3.scale.linear().range([400, 40]).domain([d3.min(sampleData, function (d) {
+        var xRange = d3.scale.linear().range([0, 400])
+        			.domain(0, d3.max(data)
+                    );
+        var yRange = d3.scale.linear().range([400, 40]).domain([d3.min(userPhoneNumbers, function (d) {
                             return d.y;
                         }),
-                        d3.max(sampleData, function (d) {
+                        d3.max(userPhoneNumbers, function (d) {
                             return d.y;
                         })]);
         var xAxis = d3.svg.axis().scale(xRange);
@@ -46,4 +24,3 @@ function InitChart(){
         .attr("r", 10)
         .style("fill", "red");
 }
-    
